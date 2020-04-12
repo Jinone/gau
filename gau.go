@@ -120,13 +120,17 @@ func Run(domain string) {
 			continue
 		}
 		for _, f := range found {
-			if !HttpStatus {
-				if !DeDuplication(f){
-					fmt.Println(f)
+			if !HttpStatus  {
+				if !DeDuplication(f) {
+					if UrlPath(f) {
+						fmt.Println(f)
+					}
 				}
 			} else {
 				if !DeDuplication(f) {
-					fmt.Println(HttpCode(f))
+					if UrlPath(f) {
+						fmt.Println(HttpCode(f))
+					}
 				}
 			}
 		}
@@ -305,4 +309,16 @@ func HttpCode(url string) (x string){
 	}
 	g := fmt.Sprintf("%s %d  %s len:%d",url,res.StatusCode,res.Header.Get("Location"),res.ContentLength)
 	return g
+}
+
+func UrlPath(x string) (w bool) {
+	u, err := url.Parse(x)
+	if err != nil {
+		return false
+	}
+	if !(strings.HasSuffix(u.Path,".jpg")) && !(strings.HasSuffix(u.Path,".css")) && !(strings.HasSuffix(u.Path,".svg")) && !(strings.HasSuffix(u.Path,".png")) && !(strings.HasSuffix(u.Path,".gif")){
+		return false
+	}else {
+		return true
+	}
 }
