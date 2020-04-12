@@ -122,13 +122,13 @@ func Run(domain string) {
 		for _, f := range found {
 			if !HttpStatus  {
 				if !DeDuplication(f) {
-					if UrlPath(f) {
+					if !UrlPath(f) {
 						fmt.Println(f)
 					}
 				}
 			} else {
 				if !DeDuplication(f) {
-					if UrlPath(f) {
+					if !UrlPath(f) {
 						fmt.Println(HttpCode(f))
 					}
 				}
